@@ -1,0 +1,4 @@
+interface:
+  display_name: "Patent Disclosure Drafting"
+  short_description: "Draft and review Chinese patent disclosure packages"
+  default_prompt: "Use $patent-disclosure-drafting to draft, review, search, illustrate, or export a Chinese patent disclosure package."

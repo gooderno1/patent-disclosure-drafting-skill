@@ -1,0 +1,8 @@
+# Local development scratch space
+local_dev_work/
+
+# Python cache and virtual environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
