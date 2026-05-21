@@ -19,6 +19,7 @@ description: Use when drafting, restructuring, reviewing, illustrating, searchin
 4. Mathematics exists to explain the method. Do not separate a large formula block from the actual procedural steps.
 5. Define every scalar, vector, matrix, set, function, threshold, binding item, and version item exactly once in `2.3.1`.
 6. Keep titles, terminology, symbols, captions, file names, and examples consistent across `md`, images, search reports, and `docx`.
+7. In the final disclosure, figure and flowchart descriptions must be written as formal disclosure prose such as `图 1 示出了...` and `图中主要包括以下节点...`; do not leave drafting-instruction wording such as `建议按...绘制` in the deliverable.
 
 ## Workflow
 
@@ -65,6 +66,7 @@ Read [references/workflow.md](references/workflow.md) for the full intake and de
 
 - Use [references/review-checklist.md](references/review-checklist.md).
 - Resolve contradictions, undefined symbols, missing decision branches, placeholder text, and inconsistent numbering.
+- Remove drafting-process wording that belongs to internal production notes rather than the final disclosure.
 - Prefer `step -> equation -> result` phrasing over detached mathematical exposition.
 
 ### 6. Prior-Art Search and Patentability Assessment
@@ -83,6 +85,7 @@ Read [references/workflow.md](references/workflow.md) for the full intake and de
 
 - Use the `documents` skill for `.docx` work and follow [references/docx-export.md](references/docx-export.md).
 - After every markdown structural change that affects formulas or tables, re-sync the `docx`.
+- For ordered lists, prefer stable explicit numbering or otherwise verify restart/reset behavior; do not blindly trust Word auto-number continuation.
 - Shipping gate: render and inspect pages that contain formulas, large tables, figures, and section transitions.
 
 ## Output Expectations
