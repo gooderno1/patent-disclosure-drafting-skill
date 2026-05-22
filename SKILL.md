@@ -1,6 +1,6 @@
 ---
 name: patent-disclosure-drafting
-description: Use when drafting, restructuring, reviewing, illustrating, searching, or exporting Chinese patent disclosure documents (`技术交底书`, `专利交底书`). Covers splitting invention points, building the markdown disclosure structure, writing method steps with embedded mathematical expressions, keeping all variables/functions/thresholds/version items in one definition table, generating figures with `gpt-image-2`, performing strict prior-art and patentability review with citations, and syncing a visually verified `.docx`.
+description: Use when drafting, restructuring, reviewing, illustrating, searching, or exporting Chinese patent disclosure documents (`技术交底书`, `专利交底书`). Covers splitting invention points, building the markdown disclosure structure, writing method steps with embedded mathematical expressions, keeping all variables/functions/thresholds/version items in one definition table, generating figures with `gpt-image-2`, performing two-pass prior-art and patentability review with citations, and syncing a visually verified `.docx`.
 ---
 
 # Patent Disclosure Drafting
@@ -19,7 +19,8 @@ description: Use when drafting, restructuring, reviewing, illustrating, searchin
 4. Mathematics exists to explain the method. Do not separate a large formula block from the actual procedural steps.
 5. Define every scalar, vector, matrix, set, function, threshold, binding item, and version item exactly once in `2.3.1`.
 6. Keep titles, terminology, symbols, captions, file names, and examples consistent across `md`, images, search reports, and `docx`.
-7. In the final disclosure, figure and flowchart descriptions must be written as formal disclosure prose such as `图 1 示出了...` and `图中主要包括以下节点...`; do not leave drafting-instruction wording such as `建议按...绘制` in the deliverable.
+7. Treat prior-art search as a two-pass gate: once before locking the title/direction, and once after the first draft is complete; use findings to reshape the disclosure rather than only appending a report.
+8. In the final disclosure, figure and flowchart descriptions must be written as formal disclosure prose such as `图 1 示出了...` and `图中主要包括以下节点...`; do not leave drafting-instruction wording such as `建议按...绘制` in the deliverable.
 
 ## Workflow
 
@@ -27,17 +28,23 @@ description: Use when drafting, restructuring, reviewing, illustrating, searchin
 
 - Distill each invention into four parts: object, core mechanism, target effect, and novelty anchor.
 - If multiple inventive kernels exist, split them into separate disclosures before drafting.
-- Decide a provisional title and filing priority for each disclosure.
+- Propose one or more provisional titles, but do not lock the final title or filing emphasis before the first-round search.
+
+### 2. First-Round Search Before Title Lock
+
+- Run a real prior-art search before fixing the disclosure title, novelty anchor, or drafting direction.
+- Use the findings to decide which direction is worth drafting, which title wording is safer, and which technical features deserve emphasis.
+- If a candidate direction is already crowded or trivially combinable, narrow it, split it, or drop it before full drafting.
 
 Read [references/workflow.md](references/workflow.md) for the full intake and decomposition method.
 
-### 2. Establish Workspace Conventions
+### 3. Establish Workspace Conventions
 
 - If the repo lacks local rules, create or update `agent.md` from [assets/agent-template.md](assets/agent-template.md).
 - Create one disclosure `md` per invention plus a `配图/` folder.
 - Keep an independent prompt file for image generation; do not keep prompt prose inside the disclosure正文.
 
-### 3. Draft the Markdown Disclosure
+### 4. Draft the Markdown Disclosure
 
 - Start from [assets/disclosure-template.md](assets/disclosure-template.md).
 - Keep the standard structure:
@@ -53,7 +60,13 @@ Read [references/workflow.md](references/workflow.md) for the full intake and de
 - In `2.10`, provide a concrete example that can be followed from input data to output conclusion.
 - Expand non-technical sections so they are not thin; these sections must support later claim drafting and attorney handoff.
 
-### 4. Produce Figures
+### 5. Second-Round Search After First Draft
+
+- After the initial disclosure draft is complete, search again using the actual title, steps, inputs/outputs, variables, and examples that now appear in the draft.
+- Revise the title, background, novelty anchor, and key defendable features based on what this second round reveals.
+- If direct overlap or an easy combination attack appears, revise the draft rather than only recording the risk.
+
+### 6. Produce Figures
 
 - Usually prepare three figures per disclosure:
   - method flow
@@ -62,15 +75,16 @@ Read [references/workflow.md](references/workflow.md) for the full intake and de
 - Generate the final bitmap figures with `gpt-image-2`.
 - Insert the images into the markdown and keep the prompt text only in the independent prompt file.
 
-### 5. Review and Final Polish
+### 7. Review and Final Polish
 
 - Use [references/review-checklist.md](references/review-checklist.md).
 - Resolve contradictions, undefined symbols, missing decision branches, placeholder text, and inconsistent numbering.
 - Remove drafting-process wording that belongs to internal production notes rather than the final disclosure.
 - Prefer `step -> equation -> result` phrasing over detached mathematical exposition.
 
-### 6. Prior-Art Search and Patentability Assessment
+### 8. Consolidate Search Findings and Patentability Assessment
 
+- For a full drafting workflow, keep both search checkpoints in the record: one before title lock and one after the first draft.
 - When the user asks for `查重`, `检索`, `授权可能性`, or close prior art, browse the web and cite sources.
 - Follow [references/patentability-search.md](references/patentability-search.md).
 - Produce per-disclosure findings:
@@ -81,7 +95,7 @@ Read [references/workflow.md](references/workflow.md) for the full intake and de
   - key features to defend
   - filing priority recommendation
 
-### 7. Export and Verify DOCX
+### 9. Export and Verify DOCX
 
 - Use the `documents` skill for `.docx` work and follow [references/docx-export.md](references/docx-export.md).
 - After every markdown structural change that affects formulas or tables, re-sync the `docx`.
@@ -94,7 +108,7 @@ Read [references/workflow.md](references/workflow.md) for the full intake and de
   - one finalized disclosure `md` per invention
   - generated figures placed in `配图/`
   - one independent image prompt file if figures were generated
-  - one patentability/search report if search was requested
+  - one or two search notes/reports, tagged by round (`题目初选` / `初稿复核`), when search was requested or implied by the full drafting workflow
   - one verified `docx` per disclosure if export was requested
 - If the user asks for only one stage, execute only the relevant slice of the workflow and avoid unnecessary artifacts.
 
